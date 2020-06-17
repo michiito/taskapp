@@ -29,6 +29,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         searchbar.showsCancelButton = true
         
         
+        
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection: Int) -> Int{
         return taskArray.count
@@ -115,21 +116,20 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         super.viewWillAppear(animated)
         tableView.reloadData()
     }
-    //    func searchBarSearchButtonClicked(searchbar: UISearchBar){
-    //        taskArray = realm.objects(Task.self).filter("category == %@", searchbar.text!)
-    //
-    //        tableView.reloadData()
-    //        print("実験")
-    //
-    //    }
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        taskArray = realm.objects(Task.self).filter("category == %@", searchbar.text!)
-        //
+            
+        print("searchbar.textは\(searchbar.text!)です")
+        if searchbar.text! == ""{
+        taskArray = realm.objects(Task.self).sorted(byKeyPath: "date",ascending: true)
         tableView.reloadData()
-        print("実験")        
-    }
+            print(searchbar.text!)
+        }else{
+            taskArray = realm.objects(Task.self).filter("category == %@", searchbar.text!)
+            
+            tableView.reloadData()
+            
+        }
     
-    
-    
-    
+}
 }
